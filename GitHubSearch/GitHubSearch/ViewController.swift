@@ -8,6 +8,8 @@
 
 import UIKit
 import SnapKit
+import RxSwift
+import RxCocoa
 
 class ViewController: UIViewController {
 	
@@ -18,29 +20,30 @@ class ViewController: UIViewController {
 	
 	// MARK: - ViewModel
 	
-	let viewModel: TableViewViewModelProtocol
+	var viewModel: TableViewViewModelProtocol
+	
+	// MARK: - Properties
+	
+	var disposeBag: DisposeBag
 	
 	// MARK: - Initialization
 	
 	init() {
+		disposeBag = DisposeBag()
+		
 		searchBar = UISearchBar(frame: .zero)
 		
 		tableView = UITableView(frame: .zero)
 		tableView.register(TableViewCell.self, forCellReuseIdentifier: TableViewCell.reuseId)
 		
-		let items: [TableViewItemProtocol] = [
-			TableViewItem.user(user: User(firstName: "Michael", lastName: "Jackson")),
-			TableViewItem.user(user: User(firstName: "Rod", lastName: "Steward")),
-			TableViewItem.repository(repository: Repository(name: "NewRepo"))
-		]
-		viewModel = TableViewViewModel(items: items)
+		viewModel = TableViewViewModel(items: [])
 		
 		super.init(nibName: nil, bundle: nil)
 		
 		view.backgroundColor = UIColor.white
-		tableView.dataSource = self
 		
 		setupLayout()
+		setupTableView()
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
@@ -66,23 +69,19 @@ class ViewController: UIViewController {
 			$0.top.equalTo(searchBar.snp.bottom)
 		}
 	}
-}
-
-extension ViewController: UITableViewDataSource {
-	func numberOfSections(in tableView: UITableView) -> Int {
-		return 1
-	}
 	
-	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		guard section == 0 else { return 0 }
-		return viewModel.items.count
-	}
+	// MARK: - Setup
 	
-	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		guard let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCell.reuseId) as? TableViewCell else { return UITableViewCell(frame: .zero) }
-		let item = viewModel.items[indexPath.row]
-		cell.setup(title: item.description)
-		return cell
+	private func setupTableView() {
+		viewModel
+			.items
+			.asObservable()
+			.bind(
+				to: tableView.rx.items(
+					cellIdentifier: TableViewCell.reuseId,
+					cellType: TableViewCell.self)) { (row, element, cell) in
+						cell.setup(title: element.description)
+			}.disposed(by: disposeBag)
+		viewModel.loadData()
 	}
 }
-

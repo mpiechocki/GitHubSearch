@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RxSwift
 
 protocol TableViewItemProtocol {
 	var description: String { get }
@@ -25,13 +26,23 @@ enum TableViewItem: TableViewItemProtocol {
 }
 
 protocol TableViewViewModelProtocol {
-	var items: [TableViewItemProtocol] { get }
+	var items: Variable<[TableViewItemProtocol]> { get }
+	func loadData()
 }
 
 class TableViewViewModel: TableViewViewModelProtocol {
-	var items: [TableViewItemProtocol]
+	var items: Variable<[TableViewItemProtocol]>
 	
 	init(items: [TableViewItemProtocol]) {
-		self.items = items
+		self.items = Variable(items)
+	}
+	
+	func loadData() {
+		let items: [TableViewItemProtocol] = [
+			TableViewItem.user(user: User(firstName: "Michael", lastName: "Jackson")),
+			TableViewItem.user(user: User(firstName: "Rod", lastName: "Steward")),
+			TableViewItem.repository(repository: Repository(name: "NewRepo"))
+		]
+		self.items.value = items
 	}
 }
