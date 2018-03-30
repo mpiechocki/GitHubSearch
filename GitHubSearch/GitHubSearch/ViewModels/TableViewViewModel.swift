@@ -19,7 +19,7 @@ enum TableViewItem: TableViewItemProtocol {
 	
 	var description: String {
 		switch self {
-		case .user(let user): return user.firstName
+		case .user(let user): return user.login
 		case .repository(let repository): return repository.name
 		}
 	}
@@ -27,22 +27,27 @@ enum TableViewItem: TableViewItemProtocol {
 
 protocol TableViewViewModelProtocol {
 	var items: Variable<[TableViewItemProtocol]> { get }
-	func loadData()
+	func loadData(searchText: String)
 }
 
 class TableViewViewModel: TableViewViewModelProtocol {
-	var items: Variable<[TableViewItemProtocol]>
 	
-	init(items: [TableViewItemProtocol]) {
-		self.items = Variable(items)
+	// MARK: - Properties
+	
+	var items: Variable<[TableViewItemProtocol]>
+	let networkManager: NetworkManaging
+	
+	// MARK: - Initialization
+	
+	init(networkManager: NetworkManaging = NetworkManager()) {
+		self.items = Variable([])
+		self.networkManager = networkManager
 	}
 	
-	func loadData() {
-		let items: [TableViewItemProtocol] = [
-			TableViewItem.user(user: User(firstName: "Michael", lastName: "Jackson")),
-			TableViewItem.user(user: User(firstName: "Rod", lastName: "Steward")),
-			TableViewItem.repository(repository: Repository(name: "NewRepo"))
-		]
-		self.items.value.append(contentsOf: items)
+	func loadData(searchText: String) {
+		networkManager.search(searchText: searchText) { [weak self] (newItems) in
+			guard let `self` = self else { return }
+			self.items.value = newItems
+		}
 	}
 }

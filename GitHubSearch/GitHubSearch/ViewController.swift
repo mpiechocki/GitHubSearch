@@ -28,7 +28,7 @@ class ViewController: UIViewController {
 	
 	// MARK: - Initialization
 	
-	init() {
+	init(viewModel: TableViewViewModelProtocol = TableViewViewModel()) {
 		disposeBag = DisposeBag()
 		
 		searchBar = UISearchBar(frame: .zero)
@@ -36,15 +36,15 @@ class ViewController: UIViewController {
 		tableView = UITableView(frame: .zero)
 		tableView.register(TableViewCell.self, forCellReuseIdentifier: TableViewCell.reuseId)
 		
-		viewModel = TableViewViewModel(items: [])
+		self.viewModel = viewModel
 		
 		super.init(nibName: nil, bundle: nil)
 		
 		view.backgroundColor = UIColor.white
 		
 		setupLayout()
-		setupTableView()
-		setupSearchBar()
+		configureTableView()
+		configureSearchBar()
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
@@ -71,9 +71,9 @@ class ViewController: UIViewController {
 		}
 	}
 	
-	// MARK: - Setup
+	// MARK: - Configuration
 	
-	private func setupTableView() {
+	private func configureTableView() {
 		viewModel
 			.items
 			.asObservable()
@@ -85,7 +85,7 @@ class ViewController: UIViewController {
 			}.disposed(by: disposeBag)
 	}
 	
-	private func setupSearchBar() {
+	private func configureSearchBar() {
 		_ = searchBar.rx
 			.text
 			.orEmpty
@@ -93,14 +93,11 @@ class ViewController: UIViewController {
 			.distinctUntilChanged()
 			.subscribe(onNext: { [weak self] (inputText) in
 				guard let `self` = self else { return }
-				print("AKUKU " + inputText)
-				self.viewModel.loadData()
-			}, onError: { (error) in
-				print("Error \(error)")
-			}, onCompleted: {
-				print("Completed")
-			}) {
-				print("disposed")
-		}.disposed(by: disposeBag)
+				self.viewModel.loadData(searchText: inputText)
+				},
+				onError: nil,
+				onCompleted: nil,
+				onDisposed: nil)
+			.disposed(by: disposeBag)
 	}
 }
