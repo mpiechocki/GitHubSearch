@@ -44,6 +44,7 @@ class ViewController: UIViewController {
 		
 		setupLayout()
 		setupTableView()
+		setupSearchBar()
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
@@ -82,6 +83,24 @@ class ViewController: UIViewController {
 					cellType: TableViewCell.self)) { (row, element, cell) in
 						cell.setup(title: element.description)
 			}.disposed(by: disposeBag)
-		viewModel.loadData()
+	}
+	
+	private func setupSearchBar() {
+		_ = searchBar.rx
+			.text
+			.orEmpty
+			.throttle(0.8, scheduler: MainScheduler.instance)
+			.distinctUntilChanged()
+			.subscribe(onNext: { [weak self] (inputText) in
+				guard let `self` = self else { return }
+				print("AKUKU " + inputText)
+				self.viewModel.loadData()
+			}, onError: { (error) in
+				print("Error \(error)")
+			}, onCompleted: {
+				print("Completed")
+			}) {
+				print("disposed")
+		}.disposed(by: disposeBag)
 	}
 }

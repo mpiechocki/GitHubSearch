@@ -43,6 +43,6 @@ class TableViewViewModel: TableViewViewModelProtocol {
 			TableViewItem.user(user: User(firstName: "Rod", lastName: "Steward")),
 			TableViewItem.repository(repository: Repository(name: "NewRepo"))
 		]
-		self.items.value = items
+		self.items.value.append(contentsOf: items)
 	}
 }
