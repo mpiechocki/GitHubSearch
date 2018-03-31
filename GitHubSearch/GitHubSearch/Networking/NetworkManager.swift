@@ -11,9 +11,10 @@ import Foundation
 protocol NetworkManaging {
 	func searchUsers(searchText: String, completion: @escaping ([User]) -> Void)
 	func searchRepositories(searchText: String, completion: @escaping ([Repository]) -> Void)
+	func getUserDetails(username: String, completion: @escaping (UserDetails) -> Void)
 }
 
-struct Response<T: Decodable>: Decodable {
+struct ListResponse<T: Decodable>: Decodable {
 	let total_count: Int
 	let incomplete_results: Bool
 	let items: [T]
@@ -26,16 +27,15 @@ class NetworkManager: NetworkManaging {
 	let session: URLSession
 	var dataTaskUsers: URLSessionDataTask?
 	var dataTaskRepositories: URLSessionDataTask?
+	var dataTaskUserDetails: URLSessionDataTask?
 	
 	// MARK: - Initialization
 	
 	init() {
-		session = URLSession(configuration: .default)
+		session = URLSession.shared
 	}
 	
 	// MARK: - Methods
-	
-	// @TODO: powiązać endpoint z modelem? Żeby załatwić te dwie metody jedną generyczną?
 	
 	func searchUsers(searchText: String, completion: @escaping ([User]) -> Void) {
 		dataTaskUsers?.cancel()
@@ -49,7 +49,7 @@ class NetworkManager: NetworkManaging {
 			} else if let data = data,
 				let response = response as? HTTPURLResponse {
 				if	response.statusCode == 200,
-					let receivedObject = self.decodeJSON(data: data, toType: Response<User>.self) {
+					let receivedObject = self.decodeJSON(data: data, toType: ListResponse<User>.self) {
 					DispatchQueue.main.async {
 						completion(receivedObject.items)
 					}
@@ -71,7 +71,7 @@ class NetworkManager: NetworkManaging {
 			} else if let data = data,
 				let response = response as? HTTPURLResponse {
 				if	response.statusCode == 200,
-					let receivedObject = self.decodeJSON(data: data, toType: Response<Repository>.self) {
+					let receivedObject = self.decodeJSON(data: data, toType: ListResponse<Repository>.self) {
 					DispatchQueue.main.async {
 						completion(receivedObject.items)
 					}
@@ -79,6 +79,26 @@ class NetworkManager: NetworkManaging {
 			}
 		})
 		dataTaskRepositories?.resume()
+	}
+	
+	func getUserDetails(username: String, completion: @escaping (UserDetails) -> Void) {
+		dataTaskUserDetails?.cancel()
+		let urlString = Endpoint.userDetails.urlString.replacingOccurrences(of: "{username}", with: username)
+		guard let url = URL(string: urlString) else { return }
+		dataTaskUserDetails = session.dataTask(with: url, completionHandler: { (data, response, error) in
+			defer { self.dataTaskUserDetails = nil }
+			if let error = error {
+				print(error.localizedDescription)
+			} else if let data = data,
+				let response = response as? HTTPURLResponse,
+				response.statusCode == 200,
+				let receivedObject = self.decodeJSON(data: data, toType: UserDetails.self) {
+				DispatchQueue.main.async {
+					completion(receivedObject)
+				}
+			}
+		})
+		dataTaskUserDetails?.resume()
 	}
 	
 	// MARK: - Helpers

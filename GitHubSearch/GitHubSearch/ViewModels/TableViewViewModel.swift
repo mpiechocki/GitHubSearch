@@ -11,9 +11,10 @@ import RxSwift
 import RxCocoa
 
 protocol TableViewItemDisplayable {
+	var id: Int { get }
 	var description: String { get }
 	var shouldBeBold: Bool { get }
-	var id: Int { get }
+	var isUser: Bool { get }
 }
 
 enum TableViewItem: TableViewItemDisplayable {
@@ -38,6 +39,13 @@ enum TableViewItem: TableViewItemDisplayable {
 		switch self {
 		case .user: return false
 		case .repository: return true
+		}
+	}
+	
+	var isUser: Bool {
+		switch self {
+		case .user: return true
+		default: return false
 		}
 	}
 }

@@ -82,6 +82,18 @@ class ViewController: UIViewController {
 					cellType: TableViewCell.self)) { (row, element, cell) in
 						cell.setup(title: element.description, isBold: element.shouldBeBold)
 			}.disposed(by: disposeBag)
+		
+		tableView
+			.rx
+			.modelSelected(TableViewItemDisplayable.self)
+			.subscribe(onNext: { [weak self] (item) in
+				guard let `self` = self else { return }
+				if item.isUser {
+					let viewController = UserDetailsViewController(username: item.description)
+					self.navigationController?.pushViewController(viewController, animated: true)
+				}
+			}, onError: nil, onCompleted: nil, onDisposed: nil)
+			.disposed(by: disposeBag)
 	}
 	
 	private func configureSearchBar() {

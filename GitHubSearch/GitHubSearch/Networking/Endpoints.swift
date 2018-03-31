@@ -11,11 +11,13 @@ import Foundation
 enum Endpoint {
 	case searchUsers
 	case searchRepositories
+	case userDetails
 	
 	var urlString: String {
 		switch self {
 		case .searchUsers: return "https://api.github.com/search/users"
 		case .searchRepositories: return "https://api.github.com/search/repositories"
+		case .userDetails: return "https://api.github.com/users/{username}"
 		}
 	}
 }

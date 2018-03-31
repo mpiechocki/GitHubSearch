@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		1878306A8641A411BE181BD2 /* Pods_GitHubSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DEF0323CAFB035E8E567672 /* Pods_GitHubSearch.framework */; };
+		3B15F427206FDC28008BF1F2 /* UserDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B15F426206FDC28008BF1F2 /* UserDetailsViewModel.swift */; };
+		3B15F428206FDC28008BF1F2 /* UserDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B15F426206FDC28008BF1F2 /* UserDetailsViewModel.swift */; };
+		3B15F42A206FDF27008BF1F2 /* UserDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B15F429206FDF27008BF1F2 /* UserDetails.swift */; };
+		3B15F42B206FDF27008BF1F2 /* UserDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B15F429206FDF27008BF1F2 /* UserDetails.swift */; };
+		3B15F42D206FE62A008BF1F2 /* UserDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B15F42C206FE62A008BF1F2 /* UserDetailsViewController.swift */; };
+		3B15F42E206FE62A008BF1F2 /* UserDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B15F42C206FE62A008BF1F2 /* UserDetailsViewController.swift */; };
 		3BB9B6C9206E8905008431F2 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB9B6C8206E8905008431F2 /* User.swift */; };
 		3BB9B6CB206E8918008431F2 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB9B6CA206E8918008431F2 /* Repository.swift */; };
 		3BB9B6CC206E8918008431F2 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB9B6CA206E8918008431F2 /* Repository.swift */; };
@@ -37,6 +43,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3B15F426206FDC28008BF1F2 /* UserDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsViewModel.swift; sourceTree = "<group>"; };
+		3B15F429206FDF27008BF1F2 /* UserDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetails.swift; sourceTree = "<group>"; };
+		3B15F42C206FE62A008BF1F2 /* UserDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsViewController.swift; sourceTree = "<group>"; };
 		3BB9B6C8206E8905008431F2 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		3BB9B6CA206E8918008431F2 /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		3BB9B6CE206E8A54008431F2 /* TableViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewViewModel.swift; sourceTree = "<group>"; };
@@ -89,6 +98,7 @@
 			children = (
 				3BB9B6C8206E8905008431F2 /* User.swift */,
 				3BB9B6CA206E8918008431F2 /* Repository.swift */,
+				3B15F429206FDF27008BF1F2 /* UserDetails.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -97,6 +107,7 @@
 			isa = PBXGroup;
 			children = (
 				3BB9B6CE206E8A54008431F2 /* TableViewViewModel.swift */,
+				3B15F426206FDC28008BF1F2 /* UserDetailsViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -149,6 +160,7 @@
 				3BC4CC29206E68F0000C1CCA /* ViewController.swift */,
 				3BC4CC2E206E68F0000C1CCA /* Assets.xcassets */,
 				3BC4CC33206E68F0000C1CCA /* Info.plist */,
+				3B15F42C206FE62A008BF1F2 /* UserDetailsViewController.swift */,
 			);
 			path = GitHubSearch;
 			sourceTree = "<group>";
@@ -334,12 +346,15 @@
 			files = (
 				3BB9B6CF206E8A54008431F2 /* TableViewViewModel.swift in Sources */,
 				3BC4CC2A206E68F0000C1CCA /* ViewController.swift in Sources */,
+				3B15F427206FDC28008BF1F2 /* UserDetailsViewModel.swift in Sources */,
 				3BC4CC28206E68F0000C1CCA /* AppDelegate.swift in Sources */,
 				3BB9B6D8206ECB6B008431F2 /* NetworkManager.swift in Sources */,
 				3BB9B6D3206E8EC4008431F2 /* TableViewCell.swift in Sources */,
 				3BB9B6C9206E8905008431F2 /* User.swift in Sources */,
 				3BB9B6DB206ECB81008431F2 /* Endpoints.swift in Sources */,
+				3B15F42D206FE62A008BF1F2 /* UserDetailsViewController.swift in Sources */,
 				3BB9B6CB206E8918008431F2 /* Repository.swift in Sources */,
+				3B15F42A206FDF27008BF1F2 /* UserDetails.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -347,12 +362,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B15F42E206FE62A008BF1F2 /* UserDetailsViewController.swift in Sources */,
 				3BB9B6D9206ECB6B008431F2 /* NetworkManager.swift in Sources */,
 				3BB9B6D4206E8EC4008431F2 /* TableViewCell.swift in Sources */,
+				3B15F42B206FDF27008BF1F2 /* UserDetails.swift in Sources */,
 				3BC4CC3D206E68F1000C1CCA /* GitHubSearchTests.swift in Sources */,
 				3BB9B6DC206ECB81008431F2 /* Endpoints.swift in Sources */,
 				3BB9B6CC206E8918008431F2 /* Repository.swift in Sources */,
 				3BB9B6D0206E8A54008431F2 /* TableViewViewModel.swift in Sources */,
+				3B15F428206FDC28008BF1F2 /* UserDetailsViewModel.swift in Sources */,
 				3BB9B6CD206E891B008431F2 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
