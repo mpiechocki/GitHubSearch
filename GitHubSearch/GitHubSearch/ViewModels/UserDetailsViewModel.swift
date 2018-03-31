@@ -47,5 +47,11 @@ class UserDetailsViewModel: UserDetailsViewModelProtocol {
 			self.username.value = userDetails.login
 			self.followersCount.value = userDetails.followers
 		}
+		
+		networkManager.getUserStarredCount(username: username) { [weak self] (count) in
+			guard let `self` = self else { return }
+			guard let count = count else { return }
+			self.starredCount.value = count
+		}
 	}
 }

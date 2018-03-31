@@ -95,5 +95,14 @@ class UserDetailsViewController: UIViewController {
 				self.followersCountLabel.text = "\(followersCount) followers"
 			}, onError: nil, onCompleted: nil, onDisposed: nil)
 			.disposed(by: disposeBag)
+		
+		viewModel
+			.starredCount
+			.asObservable()
+			.subscribe(onNext: { [weak self] (starredCount) in
+				guard let `self` = self else { return }
+				self.starredCountLabel.text = "\(starredCount) stars"
+			}, onError: nil, onCompleted: nil, onDisposed: nil)
+			.disposed(by: disposeBag)
 	}
 }

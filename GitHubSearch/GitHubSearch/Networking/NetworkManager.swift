@@ -12,6 +12,7 @@ protocol NetworkManaging {
 	func searchUsers(searchText: String, completion: @escaping ([User]) -> Void)
 	func searchRepositories(searchText: String, completion: @escaping ([Repository]) -> Void)
 	func getUserDetails(username: String, completion: @escaping (UserDetails) -> Void)
+	func getUserStarredCount(username: String, completion: @escaping (Int?) -> Void)
 }
 
 struct ListResponse<T: Decodable>: Decodable {
@@ -28,6 +29,7 @@ class NetworkManager: NetworkManaging {
 	var dataTaskUsers: URLSessionDataTask?
 	var dataTaskRepositories: URLSessionDataTask?
 	var dataTaskUserDetails: URLSessionDataTask?
+	var dataTaskUserStarred: URLSessionDataTask?
 	
 	// MARK: - Initialization
 	
@@ -99,6 +101,33 @@ class NetworkManager: NetworkManaging {
 			}
 		})
 		dataTaskUserDetails?.resume()
+	}
+	
+	func getUserStarredCount(username: String, completion: @escaping (Int?) -> Void) {
+		dataTaskUserStarred?.cancel()
+		let urlString = Endpoint.starred.urlString.replacingOccurrences(of: "{username}", with: username)
+		guard let url = URL(string: urlString) else { return }
+		dataTaskUserStarred = session.dataTask(with: url, completionHandler: { (data, response, error) in
+			defer { self.dataTaskUserStarred = nil }
+			if let error = error {
+				print(error.localizedDescription)
+				DispatchQueue.main.async {
+					completion(nil)
+				}
+			} else if let data = data,
+				let response = response as? HTTPURLResponse,
+				response.statusCode == 200,
+				let receivedObject = self.decodeJSON(data: data, toType: Array<Repository>.self) {
+				DispatchQueue.main.async {
+					completion(receivedObject.count)
+				}
+			} else {
+				DispatchQueue.main.async {
+					completion(nil)
+				}
+			}
+		})
+		dataTaskUserStarred?.resume()
 	}
 	
 	// MARK: - Helpers
