@@ -17,7 +17,7 @@ class UserDetailsViewController: UIViewController {
 	
 	let stackView: UIStackView
 	let usernameLabel: UILabel
-	let avatar: UIImageView
+	let avatarImageView: UIImageView
 	let followersCountLabel: UILabel
 	let starredCountLabel: UILabel
 	
@@ -38,7 +38,7 @@ class UserDetailsViewController: UIViewController {
 		stackView.axis = .vertical
 		usernameLabel = UILabel()
 		usernameLabel.text = "username"
-		avatar = UIImageView(frame: .zero)
+		avatarImageView = UIImageView(frame: .zero)
 		followersCountLabel = UILabel()
 		followersCountLabel.text = "\(0) followers"
 		starredCountLabel = UILabel()
@@ -68,7 +68,7 @@ class UserDetailsViewController: UIViewController {
 	
 	private func setupLayout() {
 		stackView.addArrangedSubview(usernameLabel)
-		stackView.addArrangedSubview(avatar)
+		stackView.addArrangedSubview(avatarImageView)
 		stackView.addArrangedSubview(followersCountLabel)
 		stackView.addArrangedSubview(starredCountLabel)
 		
@@ -103,6 +103,12 @@ class UserDetailsViewController: UIViewController {
 				guard let `self` = self else { return }
 				self.starredCountLabel.text = "\(starredCount) stars"
 			}, onError: nil, onCompleted: nil, onDisposed: nil)
+			.disposed(by: disposeBag)
+		
+		viewModel
+			.avatar
+			.asObservable()
+			.bind(to: avatarImageView.rx.image)
 			.disposed(by: disposeBag)
 	}
 }

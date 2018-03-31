@@ -158,9 +158,9 @@
 				3BB9B6C4206E88C4008431F2 /* Models */,
 				3BC4CC27206E68F0000C1CCA /* AppDelegate.swift */,
 				3BC4CC29206E68F0000C1CCA /* ViewController.swift */,
+				3B15F42C206FE62A008BF1F2 /* UserDetailsViewController.swift */,
 				3BC4CC2E206E68F0000C1CCA /* Assets.xcassets */,
 				3BC4CC33206E68F0000C1CCA /* Info.plist */,
-				3B15F42C206FE62A008BF1F2 /* UserDetailsViewController.swift */,
 			);
 			path = GitHubSearch;
 			sourceTree = "<group>";

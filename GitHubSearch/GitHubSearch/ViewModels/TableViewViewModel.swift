@@ -86,10 +86,12 @@ class TableViewViewModel: TableViewViewModelProtocol {
 	func loadData(searchText: String) {
 		networkManager.searchUsers(searchText: searchText) { [weak self] (users) in
 			guard let `self` = self else { return }
+			guard let users = users else { return }
 			self.users.value = users
 		}
 		networkManager.searchRepositories(searchText: searchText) { [weak self] (repositories) in
 			guard let `self` = self else { return }
+			guard let repositories = repositories else { return }
 			self.repositories.value = repositories
 		}
 	}
