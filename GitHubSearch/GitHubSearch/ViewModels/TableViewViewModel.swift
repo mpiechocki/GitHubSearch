@@ -8,9 +8,11 @@
 
 import Foundation
 import RxSwift
+import RxCocoa
 
 protocol TableViewItemProtocol {
 	var description: String { get }
+	var shouldBeBold: Bool { get }
 }
 
 enum TableViewItem: TableViewItemProtocol {
@@ -23,10 +25,19 @@ enum TableViewItem: TableViewItemProtocol {
 		case .repository(let repository): return repository.name
 		}
 	}
+	
+	var shouldBeBold: Bool {
+		switch self {
+		case .user: return false
+		case .repository: return true
+		}
+	}
 }
 
 protocol TableViewViewModelProtocol {
-	var items: Variable<[TableViewItemProtocol]> { get }
+	var items: Observable<[TableViewItemProtocol]> { get }
+	var users: Variable<[User]> { get }
+	var repositories: Variable<[Repository]> { get }
 	func loadData(searchText: String)
 }
 
@@ -34,20 +45,35 @@ class TableViewViewModel: TableViewViewModelProtocol {
 	
 	// MARK: - Properties
 	
-	var items: Variable<[TableViewItemProtocol]>
+	var items: Observable<[TableViewItemProtocol]>
+	var users: Variable<[User]>
+	var repositories: Variable<[Repository]>
 	let networkManager: NetworkManaging
 	
 	// MARK: - Initialization
 	
 	init(networkManager: NetworkManaging = NetworkManager()) {
-		self.items = Variable([])
 		self.networkManager = networkManager
+		users = Variable([])
+		repositories = Variable([])
+		
+		// @TODO: sortowanie
+		
+		items = Observable.combineLatest(users.asObservable(), repositories.asObservable()) { (u, r) in
+			let usersItems = u.map { TableViewItem.user(user: $0) }
+			let repositoriesItems = r.map { TableViewItem.repository(repository: $0) }
+			return usersItems + repositoriesItems
+		}
 	}
 	
 	func loadData(searchText: String) {
-		networkManager.search(searchText: searchText) { [weak self] (newItems) in
+		networkManager.searchUsers(searchText: searchText) { [weak self] (users) in
 			guard let `self` = self else { return }
-			self.items.value = newItems
+			self.users.value = users
+		}
+		networkManager.searchRepositories(searchText: searchText) { [weak self] (repositories) in
+			guard let `self` = self else { return }
+			self.repositories.value = repositories
 		}
 	}
 }

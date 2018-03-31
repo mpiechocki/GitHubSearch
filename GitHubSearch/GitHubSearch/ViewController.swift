@@ -32,7 +32,6 @@ class ViewController: UIViewController {
 		disposeBag = DisposeBag()
 		
 		searchBar = UISearchBar(frame: .zero)
-		
 		tableView = UITableView(frame: .zero)
 		tableView.register(TableViewCell.self, forCellReuseIdentifier: TableViewCell.reuseId)
 		
@@ -81,7 +80,7 @@ class ViewController: UIViewController {
 				to: tableView.rx.items(
 					cellIdentifier: TableViewCell.reuseId,
 					cellType: TableViewCell.self)) { (row, element, cell) in
-						cell.setup(title: element.description)
+						cell.setup(title: element.description, isBold: element.shouldBeBold)
 			}.disposed(by: disposeBag)
 	}
 	

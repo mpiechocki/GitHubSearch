@@ -10,6 +10,8 @@ import Foundation
 
 protocol NetworkManaging {
 	func search(searchText: String, completion: @escaping ([TableViewItem]) -> Void)
+	func searchUsers(searchText: String, completion: @escaping ([User]) -> Void)
+	func searchRepositories(searchText: String, completion: @escaping ([Repository]) -> Void)
 }
 
 struct Response<T: Decodable>: Decodable {

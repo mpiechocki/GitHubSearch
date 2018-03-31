@@ -42,7 +42,12 @@ class TableViewCell: UITableViewCell {
 	
 	// MARK: - Setup
 	
-	func setup(title: String) {
+	func setup(title: String, isBold: Bool) {
 		titleLabel.text = title
+		if isBold {
+			titleLabel.font = UIFont.boldSystemFont(ofSize: 15.0)
+		} else {
+			titleLabel.font = UIFont.systemFont(ofSize: 15.0)
+		}
 	}
 }
