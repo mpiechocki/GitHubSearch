@@ -9,7 +9,6 @@
 import Foundation
 
 protocol NetworkManaging {
-	func search(searchText: String, completion: @escaping ([TableViewItem]) -> Void)
 	func searchUsers(searchText: String, completion: @escaping ([User]) -> Void)
 	func searchRepositories(searchText: String, completion: @escaping ([Repository]) -> Void)
 }
@@ -35,15 +34,6 @@ class NetworkManager: NetworkManaging {
 	}
 	
 	// MARK: - Methods
-	
-	func search(searchText: String, completion: @escaping ([TableViewItem]) -> Void) {
-		searchUsers(searchText: searchText) { (users) in
-			completion(users.map { TableViewItem.user(user: $0) })
-		}
-		searchRepositories(searchText: searchText) { (repositories) in
-			completion(repositories.map { TableViewItem.repository(repository: $0) })
-		}
-	}
 	
 	// @TODO: powiązać endpoint z modelem? Żeby załatwić te dwie metody jedną generyczną?
 	

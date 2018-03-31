@@ -10,14 +10,22 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-protocol TableViewItemProtocol {
+protocol TableViewItemDisplayable {
 	var description: String { get }
 	var shouldBeBold: Bool { get }
+	var id: Int { get }
 }
 
-enum TableViewItem: TableViewItemProtocol {
+enum TableViewItem: TableViewItemDisplayable {
 	case user(user: User)
 	case repository(repository: Repository)
+	
+	var id: Int {
+		switch self {
+		case .user(let user): return user.id
+		case .repository(let repository): return repository.id
+		}
+	}
 	
 	var description: String {
 		switch self {
@@ -35,7 +43,7 @@ enum TableViewItem: TableViewItemProtocol {
 }
 
 protocol TableViewViewModelProtocol {
-	var items: Observable<[TableViewItemProtocol]> { get }
+	var items: Observable<[TableViewItemDisplayable]> { get }
 	var users: Variable<[User]> { get }
 	var repositories: Variable<[Repository]> { get }
 	func loadData(searchText: String)
@@ -45,7 +53,7 @@ class TableViewViewModel: TableViewViewModelProtocol {
 	
 	// MARK: - Properties
 	
-	var items: Observable<[TableViewItemProtocol]>
+	var items: Observable<[TableViewItemDisplayable]>
 	var users: Variable<[User]>
 	var repositories: Variable<[Repository]>
 	let networkManager: NetworkManaging
@@ -57,12 +65,13 @@ class TableViewViewModel: TableViewViewModelProtocol {
 		users = Variable([])
 		repositories = Variable([])
 		
-		// @TODO: sortowanie
-		
 		items = Observable.combineLatest(users.asObservable(), repositories.asObservable()) { (u, r) in
 			let usersItems = u.map { TableViewItem.user(user: $0) }
 			let repositoriesItems = r.map { TableViewItem.repository(repository: $0) }
-			return usersItems + repositoriesItems
+			let sum = usersItems + repositoriesItems
+			return sum.sorted { (lhs, rhs) in
+				return lhs.id < rhs.id
+			}
 		}
 	}
 	
