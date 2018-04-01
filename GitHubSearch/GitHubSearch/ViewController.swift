@@ -40,6 +40,7 @@ class ViewController: UIViewController {
 		super.init(nibName: nil, bundle: nil)
 		
 		view.backgroundColor = UIColor.white
+		title = "GitHubSearch"
 		
 		setupLayout()
 		configureTableView()
@@ -95,7 +96,7 @@ class ViewController: UIViewController {
 			}, onError: nil, onCompleted: nil, onDisposed: nil)
 			.disposed(by: disposeBag)
 		
-		tableView.rx.setDelegate(self)
+		_ = tableView.rx.setDelegate(self)
 	}
 	
 	private func configureSearchBar() {
@@ -111,6 +112,15 @@ class ViewController: UIViewController {
 				onError: nil,
 				onCompleted: nil,
 				onDisposed: nil)
+			.disposed(by: disposeBag)
+		
+		searchBar
+			.rx
+			.searchButtonClicked
+			.subscribe(onNext: { [weak self] in
+				guard let `self` = self else { return }
+				self.searchBar.resignFirstResponder()
+			}, onError: nil, onCompleted: nil, onDisposed: nil)
 			.disposed(by: disposeBag)
 	}
 }

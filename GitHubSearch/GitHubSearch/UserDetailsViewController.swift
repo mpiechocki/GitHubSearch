@@ -39,8 +39,8 @@ class UserDetailsViewController: UIViewController {
 		
 		stackView = UIStackView(frame: .zero)
 		stackView.axis = .vertical
-		stackView.alignment = .center
-		stackView.distribution = .fillEqually
+		stackView.alignment = .leading
+		stackView.distribution = .equalSpacing
 		
 		usernameLabel = UILabel()
 		usernameLabel.text = "username"
@@ -93,13 +93,13 @@ class UserDetailsViewController: UIViewController {
 			$0.top.equalTo(avatarImageView.snp.bottom).offset(5.0)
 			$0.left.equalToSuperview().inset(5.0)
 			$0.right.equalToSuperview().inset(5.0)
-			$0.bottom.equalToSuperview().inset(5.0)
+			$0.bottom.greaterThanOrEqualToSuperview().inset(5.0)
 		}
 		
 		view.addSubview(containerView)
 		containerView.snp.makeConstraints {
 			$0.center.equalToSuperview()
-			$0.height.equalTo(view.bounds.height * 0.75)
+			$0.height.equalTo(view.bounds.height * 0.55)
 			$0.width.equalTo(view.bounds.width * 0.75)
 		}
 	}
@@ -110,7 +110,10 @@ class UserDetailsViewController: UIViewController {
 		viewModel
 			.username
 			.asObservable()
-			.bind(to: usernameLabel.rx.text)
+			.subscribe(onNext: { [weak self] (username) in
+				guard let `self` = self else { return }
+				self.usernameLabel.text = "username: " + username
+			}, onError: nil, onCompleted: nil, onDisposed: nil)
 			.disposed(by: disposeBag)
 		
 		viewModel
@@ -118,7 +121,7 @@ class UserDetailsViewController: UIViewController {
 			.asObservable()
 			.subscribe(onNext: { [weak self] (followersCount) in
 				guard let `self` = self else { return }
-				self.followersCountLabel.text = "\(followersCount) followers"
+				self.followersCountLabel.text = "followers: \(followersCount)"
 			}, onError: nil, onCompleted: nil, onDisposed: nil)
 			.disposed(by: disposeBag)
 		
@@ -127,7 +130,7 @@ class UserDetailsViewController: UIViewController {
 			.asObservable()
 			.subscribe(onNext: { [weak self] (starredCount) in
 				guard let `self` = self else { return }
-				self.starredCountLabel.text = "\(starredCount) stars"
+				self.starredCountLabel.text = "stars: \(starredCount)"
 			}, onError: nil, onCompleted: nil, onDisposed: nil)
 			.disposed(by: disposeBag)
 		
