@@ -43,7 +43,7 @@ class UserDetailsViewController: UIViewController {
 		stackView.distribution = .equalSpacing
 		
 		usernameLabel = UILabel()
-		usernameLabel.text = "username"
+		usernameLabel.text = "username: \(username)"
 		
 		avatarImageView = UIImageView(frame: .zero)
 		
@@ -107,15 +107,6 @@ class UserDetailsViewController: UIViewController {
 	// MARK: - Setup
 	
 	private func bindViewModel() {
-		viewModel
-			.username
-			.asObservable()
-			.subscribe(onNext: { [weak self] (username) in
-				guard let `self` = self else { return }
-				self.usernameLabel.text = "username: " + username
-			}, onError: nil, onCompleted: nil, onDisposed: nil)
-			.disposed(by: disposeBag)
-		
 		viewModel
 			.followersCount
 			.asObservable()

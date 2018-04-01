@@ -1,31 +1,30 @@
 //
-//  GitHubSearchViewControllersTests.swift
-//  GitHubSearchViewControllersTests
+//  GitHubSearchViewControllerTests.swift
+//  GitHubSearchViewControllerTests
 //
 //  Created by dontgonearthecastle on 01/04/2018.
 //  Copyright © 2018 dontgonearthecastle. All rights reserved.
 //
 
 import XCTest
-@testable import GitHubSearch
 
-class GitHubSearchViewControllersTests: XCTestCase {
-	
+class GitHubSearchViewControllerTests: XCTestCase {
+    
 	var viewController: ViewController!
 	var tableViewViewModel: MockTableViewViewModel!
 	
-    override func setUp() {
-        super.setUp()
+	override func setUp() {
+		super.setUp()
 		tableViewViewModel = MockTableViewViewModel()
 		viewController = ViewController(viewModel: tableViewViewModel)
-    }
-    
-    override func tearDown() {
-        tableViewViewModel = nil
+	}
+	
+	override func tearDown() {
+		tableViewViewModel = nil
 		viewController = nil
-        super.tearDown()
-    }
-    
+		super.tearDown()
+	}
+	
 	func testViewController() {
 		tableViewViewModel.loadData(searchText: "")
 		

@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double Pods_GitHubSearch_GitHubSearchTestsVersionNumber;
-FOUNDATION_EXPORT const unsigned char Pods_GitHubSearch_GitHubSearchTestsVersionString[];
+FOUNDATION_EXPORT double Pods_GitHubSearch_GitHubSearchApiCallsTestsVersionNumber;
+FOUNDATION_EXPORT const unsigned char Pods_GitHubSearch_GitHubSearchApiCallsTestsVersionString[];
 
