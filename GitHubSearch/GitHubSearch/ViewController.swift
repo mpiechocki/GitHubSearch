@@ -95,7 +95,7 @@ class ViewController: UIViewController {
 				}
 			}, onError: nil, onCompleted: nil, onDisposed: nil)
 			.disposed(by: disposeBag)
-		
+
 		_ = tableView.rx.setDelegate(self)
 	}
 	
