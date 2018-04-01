@@ -15,6 +15,7 @@ class UserDetailsViewController: UIViewController {
 	
 	// MARK: - Views
 	
+	let containerView: UIView
 	let stackView: UIStackView
 	let usernameLabel: UILabel
 	let avatarImageView: UIImageView
@@ -32,15 +33,23 @@ class UserDetailsViewController: UIViewController {
 	init(username: String, viewModel: UserDetailsViewModelProtocol = UserDetailsViewModel()) {
 		self.viewModel = viewModel
 		self.username = username
-		disposeBag = DisposeBag()
+		self.disposeBag = DisposeBag()
+		
+		containerView = UIView(frame: .zero)
 		
 		stackView = UIStackView(frame: .zero)
 		stackView.axis = .vertical
+		stackView.alignment = .center
+		stackView.distribution = .fillEqually
+		
 		usernameLabel = UILabel()
 		usernameLabel.text = "username"
+		
 		avatarImageView = UIImageView(frame: .zero)
+		
 		followersCountLabel = UILabel()
 		followersCountLabel.text = "\(0) followers"
+		
 		starredCountLabel = UILabel()
 		starredCountLabel.text = "\(0) stars"
 		
@@ -67,14 +76,41 @@ class UserDetailsViewController: UIViewController {
 	// MARK: - Layout
 	
 	private func setupLayout() {
+//		stackView.addArrangedSubview(usernameLabel)
+//		stackView.addArrangedSubview(avatarImageView)
+//		stackView.addArrangedSubview(followersCountLabel)
+//		stackView.addArrangedSubview(starredCountLabel)
+//
+//		view.addSubview(stackView)
+//		stackView.snp.makeConstraints {
+//			$0.center.equalToSuperview()
+//		}
+		
+		containerView.addSubview(avatarImageView)
+		avatarImageView.snp.makeConstraints {
+			$0.top.equalToSuperview().inset(5.0)
+			$0.left.equalToSuperview().inset(5.0)
+			$0.right.equalToSuperview().inset(5.0)
+			$0.width.equalTo(avatarImageView.snp.height)
+		}
+		
 		stackView.addArrangedSubview(usernameLabel)
-		stackView.addArrangedSubview(avatarImageView)
 		stackView.addArrangedSubview(followersCountLabel)
 		stackView.addArrangedSubview(starredCountLabel)
 		
-		view.addSubview(stackView)
+		containerView.addSubview(stackView)
 		stackView.snp.makeConstraints {
+			$0.top.equalTo(avatarImageView.snp.bottom).offset(5.0)
+			$0.left.equalToSuperview().inset(5.0)
+			$0.right.equalToSuperview().inset(5.0)
+			$0.bottom.equalToSuperview().inset(5.0)
+		}
+		
+		view.addSubview(containerView)
+		containerView.snp.makeConstraints {
 			$0.center.equalToSuperview()
+			$0.height.equalTo(view.bounds.height * 0.75)
+			$0.width.equalTo(view.bounds.width * 0.75)
 		}
 	}
 	

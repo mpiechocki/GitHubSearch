@@ -94,6 +94,8 @@ class ViewController: UIViewController {
 				}
 			}, onError: nil, onCompleted: nil, onDisposed: nil)
 			.disposed(by: disposeBag)
+		
+		tableView.rx.setDelegate(self)
 	}
 	
 	private func configureSearchBar() {
@@ -110,5 +112,11 @@ class ViewController: UIViewController {
 				onCompleted: nil,
 				onDisposed: nil)
 			.disposed(by: disposeBag)
+	}
+}
+
+extension ViewController: UITableViewDelegate {
+	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+		return 40.0
 	}
 }
