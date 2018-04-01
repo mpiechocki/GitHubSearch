@@ -8,4 +8,14 @@ target 'GitHubSearch' do
 	pod 'Alamofire', '~> 4.7'
 	pod 'AlamofireImage', '~> 3.3'
 	pod 'AlamofireNetworkActivityIndicator', '~> 2.2'
+	
+	target 'GitHubSearchTests' do
+		inherit! :complete
+	end
+	target 'GitHubSearchViewControllersTests' do
+		inherit! :complete
+	end
+	target 'GitHubSearchUserDetailsTests' do
+		inherit! :complete
+	end
 end

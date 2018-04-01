@@ -89,10 +89,7 @@ class ViewController: UIViewController {
 			.modelSelected(TableViewItemDisplayable.self)
 			.subscribe(onNext: { [weak self] (item) in
 				guard let `self` = self else { return }
-				if item.isUser {
-					let viewController = UserDetailsViewController(username: item.description)
-					self.navigationController?.pushViewController(viewController, animated: true)
-				}
+				self.itemSelected(item: item)
 			}, onError: nil, onCompleted: nil, onDisposed: nil)
 			.disposed(by: disposeBag)
 
@@ -122,6 +119,15 @@ class ViewController: UIViewController {
 				self.searchBar.resignFirstResponder()
 			}, onError: nil, onCompleted: nil, onDisposed: nil)
 			.disposed(by: disposeBag)
+	}
+	
+	// MARK: - Actions
+	
+	private func itemSelected(item: TableViewItemDisplayable) {
+		if item.isUser {
+			let viewController = UserDetailsViewController(username: item.description)
+			self.navigationController?.pushViewController(viewController, animated: true)
+		}
 	}
 }
 
