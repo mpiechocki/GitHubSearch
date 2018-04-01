@@ -125,10 +125,9 @@ class ViewController: UIViewController {
 	// MARK: - Actions
 	
 	private func itemSelected(item: TableViewItemDisplayable) {
-		if item.isUser {
-			let viewController = UserDetailsViewController(username: item.description)
-			self.navigationController?.pushViewController(viewController, animated: true)
-		}
+		guard item.isUser else { return }
+		let viewController = UserDetailsViewController(username: item.description)
+		self.navigationController?.pushViewController(viewController, animated: true)
 	}
 }
 
