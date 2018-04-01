@@ -30,7 +30,7 @@ class NetworkManager: NetworkManaging {
 	
 	func searchUsers(searchText: String, completion: @escaping ([User]?) -> Void) {
 		let parameters: Parameters = ["q": searchText]
-		Alamofire.request(Endpoint.searchUsers.urlString, method: .get, parameters: parameters).responseJSON { [weak self] (response) in
+		Alamofire.request(Endpoint.searchUsers.url, method: .get, parameters: parameters).responseJSON { [weak self] (response) in
 			guard let `self` = self else { completion(nil); return }
 			guard let data = response.data else { completion(nil); return }
 			guard let receivedObject = self.decodeJSON(data: data, toType: ListResponse<User>.self) else { completion(nil); return }
@@ -40,7 +40,7 @@ class NetworkManager: NetworkManaging {
 	
 	func searchRepositories(searchText: String, completion: @escaping ([Repository]?) -> Void) {
 		let parameters: Parameters = ["q": searchText]
-		Alamofire.request(Endpoint.searchRepositories.urlString, method: .get, parameters: parameters).responseJSON { [weak self] (response) in
+		Alamofire.request(Endpoint.searchRepositories.url, method: .get, parameters: parameters).responseJSON { [weak self] (response) in
 			guard let `self` = self else { completion(nil); return }
 			guard let data = response.data else { completion(nil); return }
 			guard let receivedObject = self.decodeJSON(data: data, toType: ListResponse<Repository>.self) else { completion(nil); return }
@@ -49,7 +49,7 @@ class NetworkManager: NetworkManaging {
 	}
 	
 	func getUserDetails(username: String, completion: @escaping (UserDetails?) -> Void) {
-		let url = Endpoint.userDetails.urlString.replacingOccurrences(of: "{username}", with: username)
+		let url = Endpoint.userDetails.url.replacingOccurrences(of: "{username}", with: username)
 		Alamofire.request(url).responseJSON { [weak self] (response) in
 			guard let `self` = self else { completion(nil); return }
 			guard let data = response.data else { completion(nil); return }
@@ -59,7 +59,7 @@ class NetworkManager: NetworkManaging {
 	}
 	
 	func getUserStarredCount(username: String, completion: @escaping (Int?) -> Void) {
-		let url = Endpoint.starred.urlString.replacingOccurrences(of: "{username}", with: username)
+		let url = Endpoint.starred.url.replacingOccurrences(of: "{username}", with: username)
 		Alamofire.request(url).responseJSON { [weak self] (response) in
 			guard let `self` = self else { completion(nil); return }
 			guard let data = response.data else { completion(nil); return }

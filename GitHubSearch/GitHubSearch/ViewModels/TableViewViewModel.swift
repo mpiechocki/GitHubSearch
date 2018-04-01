@@ -75,6 +75,8 @@ class TableViewViewModel: TableViewViewModelProtocol {
 		}
 	}
 	
+	// MARK: - Methods
+	
 	func loadData(searchText: String) {
 		networkManager.searchUsers(searchText: searchText) { [weak self] (users) in
 			guard let `self` = self else { return }

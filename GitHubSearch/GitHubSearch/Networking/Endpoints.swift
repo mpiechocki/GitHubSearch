@@ -14,7 +14,7 @@ enum Endpoint {
 	case userDetails
 	case starred
 	
-	var urlString: String {
+	var url: String {
 		switch self {
 		case .searchUsers: return "https://api.github.com/search/users"
 		case .searchRepositories: return "https://api.github.com/search/repositories"
