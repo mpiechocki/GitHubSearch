@@ -104,6 +104,7 @@ class ViewController: UIViewController {
 			.distinctUntilChanged()
 			.subscribe(onNext: { [weak self] (inputText) in
 				guard let `self` = self else { return }
+				guard inputText != "" else { return }
 				self.viewModel.loadData(searchText: inputText)
 				},
 				onError: nil,
