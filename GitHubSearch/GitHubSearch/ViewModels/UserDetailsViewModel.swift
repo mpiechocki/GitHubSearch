@@ -35,7 +35,7 @@ class UserDetailsViewModel: UserDetailsViewModelProtocol {
 	init(networkManager: NetworkManaging = NetworkManager()) {
 		self.networkManager = networkManager
 		username = Variable("")
-		avatar = Variable(UIImage())
+		avatar = Variable(#imageLiteral(resourceName: "blankUserImage"))
 		followersCount = Variable(0)
 		starredCount = Variable(0)
 	}

@@ -7,4 +7,5 @@ target 'GitHubSearch' do
 	pod 'RxCocoa', '~> 4.0'
 	pod 'Alamofire', '~> 4.7'
 	pod 'AlamofireImage', '~> 3.3'
+	pod 'AlamofireNetworkActivityIndicator', '~> 2.2'
 end

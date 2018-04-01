@@ -76,16 +76,6 @@ class UserDetailsViewController: UIViewController {
 	// MARK: - Layout
 	
 	private func setupLayout() {
-//		stackView.addArrangedSubview(usernameLabel)
-//		stackView.addArrangedSubview(avatarImageView)
-//		stackView.addArrangedSubview(followersCountLabel)
-//		stackView.addArrangedSubview(starredCountLabel)
-//
-//		view.addSubview(stackView)
-//		stackView.snp.makeConstraints {
-//			$0.center.equalToSuperview()
-//		}
-		
 		containerView.addSubview(avatarImageView)
 		avatarImageView.snp.makeConstraints {
 			$0.top.equalToSuperview().inset(5.0)

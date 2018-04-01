@@ -13,7 +13,6 @@ import RxCocoa
 protocol TableViewItemDisplayable {
 	var id: Int { get }
 	var description: String { get }
-	var shouldBeBold: Bool { get }
 	var isUser: Bool { get }
 }
 
@@ -32,13 +31,6 @@ enum TableViewItem: TableViewItemDisplayable {
 		switch self {
 		case .user(let user): return user.login
 		case .repository(let repository): return repository.name
-		}
-	}
-	
-	var shouldBeBold: Bool {
-		switch self {
-		case .user: return false
-		case .repository: return true
 		}
 	}
 	

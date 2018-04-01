@@ -80,7 +80,7 @@ class ViewController: UIViewController {
 				to: tableView.rx.items(
 					cellIdentifier: TableViewCell.reuseId,
 					cellType: TableViewCell.self)) { (row, element, cell) in
-						cell.setup(title: element.description, isBold: element.shouldBeBold)
+						cell.setup(title: element.description, isUser: element.isUser)
 			}.disposed(by: disposeBag)
 		
 		tableView
@@ -99,7 +99,7 @@ class ViewController: UIViewController {
 	}
 	
 	private func configureSearchBar() {
-		_ = searchBar.rx
+		searchBar.rx
 			.text
 			.orEmpty
 			.throttle(0.8, scheduler: MainScheduler.instance)
