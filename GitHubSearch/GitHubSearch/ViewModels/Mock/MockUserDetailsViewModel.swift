@@ -14,12 +14,14 @@ class MockUserDetailsViewModel: UserDetailsViewModelProtocol {
 	var avatar: Variable<UIImage>
 	var followersCount: Variable<Int>
 	var starredCount: Variable<Int>
+	var showError: (() -> Void)?
 	
 	init() {
 		username = Variable("")
 		avatar = Variable(#imageLiteral(resourceName: "blankUserImage"))
 		followersCount = Variable(0)
 		starredCount = Variable(0)
+		showError = nil
 	}
 	
 	func loadUserDetails(username: String) {

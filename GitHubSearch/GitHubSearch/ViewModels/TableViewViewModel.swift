@@ -46,6 +46,8 @@ protocol TableViewViewModelProtocol {
 	var items: Observable<[TableViewItemDisplayable]> { get }
 	var users: Variable<[User]> { get }
 	var repositories: Variable<[Repository]> { get }
+	var showError: (() -> Void)? { get set }
+	
 	func loadData(searchText: String)
 }
 
@@ -57,6 +59,7 @@ class TableViewViewModel: TableViewViewModelProtocol {
 	var users: Variable<[User]>
 	var repositories: Variable<[Repository]>
 	let networkManager: NetworkManaging
+	var showError: (() -> Void)?
 	
 	// MARK: - Initialization
 	
@@ -80,12 +83,12 @@ class TableViewViewModel: TableViewViewModelProtocol {
 	func loadData(searchText: String) {
 		networkManager.searchUsers(searchText: searchText) { [weak self] (users) in
 			guard let `self` = self else { return }
-			guard let users = users else { return }
+			guard let users = users else { self.showError?(); return }
 			self.users.value = users
 		}
 		networkManager.searchRepositories(searchText: searchText) { [weak self] (repositories) in
 			guard let `self` = self else { return }
-			guard let repositories = repositories else { return }
+			guard let repositories = repositories else { self.showError?(); return }
 			self.repositories.value = repositories
 		}
 	}

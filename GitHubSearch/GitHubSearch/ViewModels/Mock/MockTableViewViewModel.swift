@@ -10,9 +10,11 @@ import Foundation
 import RxSwift
 
 class MockTableViewViewModel: TableViewViewModelProtocol {
+	
 	var items: Observable<[TableViewItemDisplayable]>
 	var users: Variable<[User]>
 	var repositories: Variable<[Repository]>
+	var showError: (() -> Void)?
 	
 	init() {
 		users = Variable([])
@@ -26,6 +28,8 @@ class MockTableViewViewModel: TableViewViewModelProtocol {
 				return lhs.id < rhs.id
 			}
 		}
+		
+		showError = nil
 	}
 	
 	func loadData(searchText: String) {

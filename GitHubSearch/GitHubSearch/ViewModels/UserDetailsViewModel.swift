@@ -15,6 +15,7 @@ protocol UserDetailsViewModelProtocol {
 	var avatar: Variable<UIImage> { get }
 	var followersCount: Variable<Int> { get }
 	var starredCount: Variable<Int> { get }
+	var showError: (() -> Void)? { get set }
 	
 	func loadUserDetails(username: String)
 }
@@ -27,6 +28,7 @@ class UserDetailsViewModel: UserDetailsViewModelProtocol {
 	let avatar: Variable<UIImage>
 	let followersCount: Variable<Int>
 	let starredCount: Variable<Int>
+	var showError: (() -> Void)?
 	
 	let networkManager: NetworkManaging
 	
@@ -45,20 +47,20 @@ class UserDetailsViewModel: UserDetailsViewModelProtocol {
 	func loadUserDetails(username: String) {
 		networkManager.getUserDetails(username: username) { [weak self] (userDetails) in
 			guard let `self` = self else { return }
-			guard let userDetails = userDetails else { return }
+			guard let userDetails = userDetails else { self.showError?(); return }
 			self.username.value = userDetails.login
 			self.followersCount.value = userDetails.followers
 			
 			self.networkManager.getImage(url: userDetails.avatar_url) { [weak self] image in
 				guard let `self` = self else { return }
-				guard let image = image else { return }
+				guard let image = image else { self.showError?(); return }
 				self.avatar.value = image
 			}
 		}
 		
 		networkManager.getUserStarredCount(username: username) { [weak self] (count) in
 			guard let `self` = self else { return }
-			guard let count = count else { return }
+			guard let count = count else { self.showError?(); return }
 			self.starredCount.value = count
 		}
 	}

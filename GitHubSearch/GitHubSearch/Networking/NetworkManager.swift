@@ -32,6 +32,8 @@ class NetworkManager: NetworkManaging {
 		let parameters: Parameters = ["q": searchText]
 		Alamofire.request(Endpoint.searchUsers.url, method: .get, parameters: parameters).responseJSON { [weak self] (response) in
 			guard let `self` = self else { completion(nil); return }
+			guard let statusCode = response.response?.statusCode else { completion(nil); return }
+			guard statusCode == 200 else { completion(nil); return }
 			guard let data = response.data else { completion(nil); return }
 			guard let receivedObject = self.decodeJSON(data: data, toType: ListResponse<User>.self) else { completion(nil); return }
 			completion(receivedObject.items)
@@ -42,6 +44,8 @@ class NetworkManager: NetworkManaging {
 		let parameters: Parameters = ["q": searchText]
 		Alamofire.request(Endpoint.searchRepositories.url, method: .get, parameters: parameters).responseJSON { [weak self] (response) in
 			guard let `self` = self else { completion(nil); return }
+			guard let statusCode = response.response?.statusCode else { completion(nil); return }
+			guard statusCode == 200 else { completion(nil); return }
 			guard let data = response.data else { completion(nil); return }
 			guard let receivedObject = self.decodeJSON(data: data, toType: ListResponse<Repository>.self) else { completion(nil); return }
 			completion(receivedObject.items)
@@ -52,6 +56,8 @@ class NetworkManager: NetworkManaging {
 		let url = Endpoint.userDetails.url.replacingOccurrences(of: "{username}", with: username)
 		Alamofire.request(url).responseJSON { [weak self] (response) in
 			guard let `self` = self else { completion(nil); return }
+			guard let statusCode = response.response?.statusCode else { completion(nil); return }
+			guard statusCode == 200 else { completion(nil); return }
 			guard let data = response.data else { completion(nil); return }
 			guard let receivedObject = self.decodeJSON(data: data, toType: UserDetails.self) else { completion(nil); return }
 			completion(receivedObject)
@@ -62,6 +68,8 @@ class NetworkManager: NetworkManaging {
 		let url = Endpoint.starred.url.replacingOccurrences(of: "{username}", with: username)
 		Alamofire.request(url).responseJSON { [weak self] (response) in
 			guard let `self` = self else { completion(nil); return }
+			guard let statusCode = response.response?.statusCode else { completion(nil); return }
+			guard statusCode == 200 else { completion(nil); return }
 			guard let data = response.data else { completion(nil); return }
 			guard let receivedObject = self.decodeJSON(data: data, toType: Array<Repository>.self) else { completion(nil); return }
 			completion(receivedObject.count)
@@ -71,6 +79,8 @@ class NetworkManager: NetworkManaging {
 	func getImage(url: String, completion: @escaping (UIImage?) -> Void) {
 		Alamofire.request(url).responseImage { response in
 			guard let data = response.data else { completion(nil); return }
+			guard let statusCode = response.response?.statusCode else { completion(nil); return }
+			guard statusCode == 200 else { completion(nil); return }
 			guard let image = UIImage(data: data) else { completion(nil); return }
 			completion(image)
 		}

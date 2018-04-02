@@ -31,6 +31,8 @@ class ViewController: UIViewController {
 		searchBar = UISearchBar(frame: .zero)
 		tableView = UITableView(frame: .zero)
 		tableView.register(TableViewCell.self, forCellReuseIdentifier: TableViewCell.reuseId)
+		let emptyView = TableViewEmptyView(frame: .zero)
+		tableView.backgroundView = emptyView
 		
 		self.viewModel = viewModel
 		
@@ -40,6 +42,8 @@ class ViewController: UIViewController {
 		title = "GitHubSearch"
 		
 		setupLayout()
+		
+		configureViewModel()
 		configureTableView()
 		configureSearchBar()
 	}
@@ -69,6 +73,14 @@ class ViewController: UIViewController {
 	}
 	
 	// MARK: - Configuration
+	
+	private func configureViewModel() {
+		viewModel.showError = { [weak self] in
+			let alert = UIAlertController(title: "Error", message: "Some network error occured. Please wait 60 seconds before searching again", preferredStyle: .alert)
+			alert.addAction(UIAlertAction(title: "OK", style: .default , handler: nil))
+			self?.present(alert, animated: true, completion: nil)
+		}
+	}
 	
 	private func configureTableView() {
 		viewModel

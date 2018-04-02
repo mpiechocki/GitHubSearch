@@ -25,7 +25,7 @@ class UserDetailsViewController: UIViewController {
 	// MARK: - Properties
 	
 	let username: String
-	let viewModel: UserDetailsViewModelProtocol
+	var viewModel: UserDetailsViewModelProtocol
 	let disposeBag: DisposeBag
 	
 	// MARK: - Initialization
@@ -58,6 +58,7 @@ class UserDetailsViewController: UIViewController {
 		view.backgroundColor = UIColor.white
 		
 		setupLayout()
+		configureViewModel()
 		bindViewModel()
 	}
 	
@@ -104,7 +105,15 @@ class UserDetailsViewController: UIViewController {
 		}
 	}
 	
-	// MARK: - Setup
+	// MARK: - Configuration
+	
+	private func configureViewModel() {
+		viewModel.showError = { [weak self] in
+			let alert = UIAlertController(title: "Error", message: "Some network error occured ;(", preferredStyle: .alert)
+			alert.addAction(UIAlertAction(title: "OK", style: .default , handler: nil))
+			self?.present(alert, animated: true, completion: nil)
+		}
+	}
 	
 	private func bindViewModel() {
 		viewModel
