@@ -48,10 +48,8 @@ class UserDetailsViewController: UIViewController {
 		avatarImageView = UIImageView(frame: .zero)
 		
 		followersCountLabel = UILabel()
-		followersCountLabel.text = "\(0) followers"
 		
 		starredCountLabel = UILabel()
-		starredCountLabel.text = "\(0) stars"
 		
 		super.init(nibName: nil, bundle: nil)
 		
@@ -130,7 +128,7 @@ class UserDetailsViewController: UIViewController {
 			.asObservable()
 			.subscribe(onNext: { [weak self] (starredCount) in
 				guard let `self` = self else { return }
-				self.starredCountLabel.text = "stars: \(starredCount)"
+				self.starredCountLabel.text = "stars given: \(starredCount)"
 			}, onError: nil, onCompleted: nil, onDisposed: nil)
 			.disposed(by: disposeBag)
 		
