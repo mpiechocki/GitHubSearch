@@ -11,10 +11,6 @@
 		3B15F427206FDC28008BF1F2 /* UserDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B15F426206FDC28008BF1F2 /* UserDetailsViewModel.swift */; };
 		3B15F42A206FDF27008BF1F2 /* UserDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B15F429206FDF27008BF1F2 /* UserDetails.swift */; };
 		3B15F42D206FE62A008BF1F2 /* UserDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B15F42C206FE62A008BF1F2 /* UserDetailsViewController.swift */; };
-		3B88EC8720723B4400C6D621 /* TableViewEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B88EC8620723B4400C6D621 /* TableViewEmptyView.swift */; };
-		3B88EC8820723B4400C6D621 /* TableViewEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B88EC8620723B4400C6D621 /* TableViewEmptyView.swift */; };
-		3B88EC8920723B4400C6D621 /* TableViewEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B88EC8620723B4400C6D621 /* TableViewEmptyView.swift */; };
-		3B88EC8A20723B4400C6D621 /* TableViewEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B88EC8620723B4400C6D621 /* TableViewEmptyView.swift */; };
 		3BA97E2120715A5D00B28154 /* MockNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA97E2020715A5D00B28154 /* MockNetworkManager.swift */; };
 		3BA97E26207161DC00B28154 /* MockTableViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA97E25207161DC00B28154 /* MockTableViewViewModel.swift */; };
 		3BA97E45207169DD00B28154 /* MockUserDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA97E44207169DD00B28154 /* MockUserDetailsViewModel.swift */; };
@@ -111,7 +107,6 @@
 		3B15F426206FDC28008BF1F2 /* UserDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsViewModel.swift; sourceTree = "<group>"; };
 		3B15F429206FDF27008BF1F2 /* UserDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetails.swift; sourceTree = "<group>"; };
 		3B15F42C206FE62A008BF1F2 /* UserDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsViewController.swift; sourceTree = "<group>"; };
-		3B88EC8620723B4400C6D621 /* TableViewEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewEmptyView.swift; sourceTree = "<group>"; };
 		3BA97E2020715A5D00B28154 /* MockNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNetworkManager.swift; sourceTree = "<group>"; };
 		3BA97E25207161DC00B28154 /* MockTableViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTableViewViewModel.swift; sourceTree = "<group>"; };
 		3BA97E44207169DD00B28154 /* MockUserDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserDetailsViewModel.swift; sourceTree = "<group>"; };
@@ -224,14 +219,6 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		3B88EC8520723B2500C6D621 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				3B88EC8620723B4400C6D621 /* TableViewEmptyView.swift */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
 		3BA97E23207161B900B28154 /* Mock */ = {
 			isa = PBXGroup;
 			children = (
@@ -341,7 +328,6 @@
 		3BC4CC26206E68F0000C1CCA /* GitHubSearch */ = {
 			isa = PBXGroup;
 			children = (
-				3B88EC8520723B2500C6D621 /* Views */,
 				3BB9B6D6206ECB4F008431F2 /* Networking */,
 				3BB9B6D1206E8EAA008431F2 /* Cells */,
 				3BB9B6C5206E88CC008431F2 /* ViewModels */,
@@ -794,7 +780,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3B88EC8820723B4400C6D621 /* TableViewEmptyView.swift in Sources */,
 				3BA97EA92071719500B28154 /* TableViewCell.swift in Sources */,
 				3BA97EA22071718E00B28154 /* NetworkManager.swift in Sources */,
 				3BA97EB5207171A200B28154 /* UserDetailsViewModel.swift in Sources */,
@@ -817,7 +802,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3B88EC8920723B4400C6D621 /* TableViewEmptyView.swift in Sources */,
 				3BA97EAA2071719500B28154 /* TableViewCell.swift in Sources */,
 				3BA97EA42071718F00B28154 /* NetworkManager.swift in Sources */,
 				3BA97EB6207171A300B28154 /* UserDetailsViewModel.swift in Sources */,
@@ -840,7 +824,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3B88EC8A20723B4400C6D621 /* TableViewEmptyView.swift in Sources */,
 				3BA97EAB2071719500B28154 /* TableViewCell.swift in Sources */,
 				3BA97EA52071718F00B28154 /* NetworkManager.swift in Sources */,
 				3BA97EB7207171A300B28154 /* UserDetailsViewModel.swift in Sources */,
@@ -871,7 +854,6 @@
 				3BB9B6D3206E8EC4008431F2 /* TableViewCell.swift in Sources */,
 				3BA97E45207169DD00B28154 /* MockUserDetailsViewModel.swift in Sources */,
 				3BA97E26207161DC00B28154 /* MockTableViewViewModel.swift in Sources */,
-				3B88EC8720723B4400C6D621 /* TableViewEmptyView.swift in Sources */,
 				3BA97E2120715A5D00B28154 /* MockNetworkManager.swift in Sources */,
 				3BB9B6C9206E8905008431F2 /* User.swift in Sources */,
 				3BB9B6DB206ECB81008431F2 /* Endpoints.swift in Sources */,

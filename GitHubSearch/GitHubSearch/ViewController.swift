@@ -31,8 +31,6 @@ class ViewController: UIViewController {
 		searchBar = UISearchBar(frame: .zero)
 		tableView = UITableView(frame: .zero)
 		tableView.register(TableViewCell.self, forCellReuseIdentifier: TableViewCell.reuseId)
-		let emptyView = TableViewEmptyView(frame: .zero)
-		tableView.backgroundView = emptyView
 		
 		self.viewModel = viewModel
 		
@@ -76,7 +74,7 @@ class ViewController: UIViewController {
 	
 	private func configureViewModel() {
 		viewModel.showError = { [weak self] in
-			let alert = UIAlertController(title: "Error", message: "Some network error occured. Please wait 60 seconds before searching again", preferredStyle: .alert)
+			let alert = UIAlertController(title: "Error", message: "Some network error occured. Please wait 60 seconds before searching again.", preferredStyle: .alert)
 			alert.addAction(UIAlertAction(title: "OK", style: .default , handler: nil))
 			self?.present(alert, animated: true, completion: nil)
 		}
