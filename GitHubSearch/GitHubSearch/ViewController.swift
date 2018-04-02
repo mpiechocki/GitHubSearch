@@ -18,12 +18,9 @@ class ViewController: UIViewController {
 	let searchBar: UISearchBar
 	let tableView: UITableView
 	
-	// MARK: - ViewModel
-	
-	var viewModel: TableViewViewModelProtocol
-	
 	// MARK: - Properties
 	
+	var viewModel: TableViewViewModelProtocol
 	var disposeBag: DisposeBag
 	
 	// MARK: - Initialization
